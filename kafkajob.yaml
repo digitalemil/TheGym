@@ -1,0 +1,19 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: kafkaconnectsetup
+spec:
+  template:
+    spec:
+      containers:
+      - name: kafkaconnectsetup
+        image: digitalemil/thegyminthecloud:kafka-connect-setup-v0.0.1
+        imagePullPolicy: Always 
+        env:
+        - name: CONNECTURL
+          value: http://kafkaconnect:8083
+        - name: ELASTICSEARCHSINK
+          value: "{'name': 'elasticsearch-sink','config': {'connector.class': 'io.confluent.connect.elasticsearch.ElasticsearchSinkConnector','tasks.max': '1','topics': 'hr','key.ignore': 'true','schema.ignore': 'true','connection.url': 'http://elastic9200:9200', 'type.name': 'hr', 'name': 'elasticsearch-sink'}}"
+      restartPolicy: Never
+  backoffLimit: 4

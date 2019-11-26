@@ -1,0 +1,73 @@
+{
+	"volumes": [],
+	"id": "listener",
+	"cmd": null,
+	"args": null,
+	"user": null,
+	"env": {
+"APPDEF":"{'fields':[{'name':'f1','pivot':false,'type':'String'},{'name':'f2','pivot':false,'type':'String'},{'name':'f3','pivot':false,'type':'String'},{'name':'f4','pivot':true,'type':'String'}],'showLocation':true,'topic':'top','table':'tab','keyspace':'keysp','path':'app','name':'e.g. My cool App'}"
+  },
+"instances": 1,
+	"cpus": 0.1,
+	"mem": 128,
+	"disk": 0,
+	"gpus": 0,
+	"executor": "",
+	"constraints": [],
+	"fetch": [{
+		"uri": "http://digitalemil.de/workerlistener-v0.0.1.tgz",
+		"extract": true,
+		"executable": false,
+		"cache": false
+	}],
+	"storeUrls": [],
+	"backoffSeconds": 1,
+	"backoffFactor": 1.15,
+	"maxLaunchDelaySeconds": 3600,
+	"container": {
+		"type": "DOCKER",
+		"volumes": [],
+		"docker": {
+			"image": "digitalemil/mypublicrepo:nhh-v1.0",
+			"network": "HOST",
+			"portMappings": null,
+			"privileged": false,
+			"parameters": [],
+			"forcePullImage": true
+		}
+	},
+	"healthChecks": [
+    {
+      "protocol": "HTTP",
+      "path": "/",
+      "gracePeriodSeconds": 2,
+      "intervalSeconds": 5,
+      "timeoutSeconds": 2,
+      "maxConsecutiveFailures": 4,
+      "portIndex": 0,
+      "ignoreHttp1xx": false
+    }
+  ],
+	"readinessChecks": [],
+	"dependencies": [],
+	"upgradeStrategy": {
+		"minimumHealthCapacity": 1,
+		"maximumOverCapacity": 1
+	},
+	"labels": {
+	},
+	"acceptedResourceRoles": null,
+	"ipAddress": null,
+	"residency": null,
+	"secrets": {},
+	"taskKillGracePeriodSeconds": null,
+	"portDefinitions": [{
+		"port": 10000,
+		"protocol": "tcp",
+		"name": "myp",
+		"labels": {
+			"VIP_0": "/dcosappstudioworkerlistener:0"
+		}
+	}],
+	"requirePorts": false
+}

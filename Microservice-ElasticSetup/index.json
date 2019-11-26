@@ -1,0 +1,13 @@
+{
+  "mappings": {
+    "doc": {
+      "properties": {
+        "deviceid": { "type": "keyword" }, 
+        "name": { "type": "text" },
+        "hr": { "type": "number" },
+        "location": { "type": "geo_point" },
+        "event_timestamp": { "type": "date" }
+      }
+    }
+  }
+}

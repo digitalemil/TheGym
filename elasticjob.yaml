@@ -1,0 +1,21 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: elasticsetup
+spec:
+  template:
+    spec:
+      containers:
+      - name: elasticsetup
+        image: digitalemil/thegyminthecloud:elastic-setup-v0.0.1
+        imagePullPolicy: Always 
+        env:
+        - name: ELASTIC_SERVICE
+          value: "http://elastic9200:9200"
+        - name: KIBANA_SERVICE
+          value: "http://kibana:5601"
+        - name: APPDEF
+          value: "{'name':'The Gym','showLocation':'true','fields':[{'name':'heartrate','pivot':'true','type':'Integer'},{'name':'user','pivot':false,'type':'String'},{'name':'deviceid','pivot':false,'type':'String'},{'name':'color','pivot':false,'type':'String'},{'name':'id','pivot':'false','type':'Long'},{'name':'location','pivot':'false','type':'Location'},{'name':'event_timestamp','pivot':'false','type':'Date/time'}],'transformer':'%0A%09result%3D%20rawtext%3B%0A%09%09%09%09%09%0A%09%09%09%09%09','topic':'hr','table':'hr','keyspace':'thegym','path':'thegym','creator':'','dockerrepo':'','img':'','vis':'','dash':'','hideloader':'true'}"
+      restartPolicy: Never
+  backoffLimit: 4

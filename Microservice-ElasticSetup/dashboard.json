@@ -1,0 +1,18 @@
+[
+  {
+    "_id": "d2acece0-f186-11e8-ae00-6d467c37380e",
+    "_type": "dashboard",
+    "_source": {
+      "title": "TheGymDashboard",
+      "hits": 0,
+      "description": "",
+      "panelsJSON": "[{\"gridData\":{\"x\":0,\"y\":0,\"w\":16,\"h\":12,\"i\":\"1\"},\"version\":\"6.5.0\",\"panelIndex\":\"1\",\"type\":\"visualization\",\"id\":\"33629da0-f187-11e8-ae00-6d467c37380e\",\"embeddableConfig\":{\"mapZoom\":2,\"mapCenter\":[34.30714385628804,-74.00390625000001]}},{\"gridData\":{\"x\":33,\"y\":0,\"w\":15,\"h\":12,\"i\":\"2\"},\"version\":\"6.5.0\",\"panelIndex\":\"2\",\"type\":\"visualization\",\"id\":\"7de62e40-f18d-11e8-8fd3-d3a86d810d67\",\"embeddableConfig\":{\"vis\":{\"colors\":{\"Max heartrate\":\"#BF1B00\"}}}},{\"gridData\":{\"x\":16,\"y\":0,\"w\":15,\"h\":12,\"i\":\"3\"},\"version\":\"6.5.0\",\"panelIndex\":\"3\",\"type\":\"visualization\",\"id\":\"ab293f50-f18d-11e8-8fd3-d3a86d810d67\",\"embeddableConfig\":{}},{\"gridData\":{\"x\":0,\"y\":12,\"w\":48,\"h\":18,\"i\":\"4\"},\"version\":\"6.5.0\",\"panelIndex\":\"4\",\"type\":\"visualization\",\"id\":\"6a789ea0-f18e-11e8-8fd3-d3a86d810d67\",\"embeddableConfig\":{}}]",
+      "optionsJSON": "{\"darkTheme\":true,\"hidePanelTitles\":false,\"useMargins\":true}",
+      "version": 1,
+      "timeRestore": false,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"query\":{\"language\":\"lucene\",\"query\":\"\"},\"filter\":[]}"
+      }
+    }
+  }
+]

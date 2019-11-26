@@ -1,0 +1,1 @@
+kubectl delete svc,deployment,job,statefulset zookeeper kafka elastic9200 elastic9300 zookeeper kafka  kafkaconnectsetup kafkaconnect elastic kibana messagelistener messagetransformer messagevalidator loader

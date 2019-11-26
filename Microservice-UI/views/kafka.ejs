@@ -1,0 +1,58 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+<link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title></title>
+</head>
+<body style="background-image:url('images/thegym.jpg')">
+<div id="alldiv" class="">
+	<div id="text" class="" style="width: calc(100% - 240px);">
+		<input id="filter" type="text" style="width: 79%;height: 5%;font-size: 100%;background-color: #F3F3F5;"</input>
+		<button id="startbutton" onclick="toggleStream()" style="width: 20%;height: 5%;font-size: 100%;background-color: #F3F3F5;">Stop</button><p>			
+		<textarea rows="40" id="messagebox" style="width: 100%;height:75%;font-size: 100%;background-color: #F3F3F5;"></textarea><p>
+        <button onclick="document.getElementById('messagebox').value='';" style="width: 20%;height: 5%;font-size: 100%;background-color: #F3F3F5;">Clear</button><p>
+	</div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  let ispaused = 0;
+  function toggleStream() {
+      let b= document.getElementById("startbutton")
+      if(ispaused == 1){
+        b.innerHTML="Stop"
+        ispaused = 0;
+      }
+      else{
+	    b.innerHTML="Start"; 
+	    ispaused = 1;
+      } 
+  } 
+  
+  var socket = io();
+
+  socket.on('hr', function(msg){
+    if(ispaused)
+        return;
+    msg= JSON.stringify(msg);
+    let currentTxtArea= document.getElementById("messagebox");
+    let text= currentTxtArea.value;
+    let filter= document.getElementById("filter").value;
+        
+    if (filter!= undefined && filter!= null && filter.length> 0){
+        if(msg.indexOf(filter) !== -1){ 
+            currentTxtArea.value= msg+"\n\n"+text;
+        }
+    } 
+    else {
+	    currentTxtArea.value= msg+"\n\n"+text;
+    }
+    if(text.length > 100000){
+        currentTxtArea.value= text.substring(0,1000);
+    }     
+});
+</script>
+
+</body>
+</html>

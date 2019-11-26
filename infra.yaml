@@ -1,0 +1,204 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elastic
+  labels:
+    app: thegym
+    component: elastic
+    version: 0.0.1      
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: thegym
+      component: elastic
+      version: 0.0.1      
+  template:
+    metadata:
+      labels:
+        app: thegym
+        component: elastic
+        version: 0.0.1
+    spec:
+      containers:
+      - name: elastic
+        image: docker.elastic.co/elasticsearch/elasticsearch:6.5.0
+        ports:
+        - containerPort: 9200
+        - containerPort: 9300
+        env:
+        - name: discovery.type
+          value: "single-node"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: elastic9200
+spec:
+  selector:
+    app: thegym
+    component: elastic
+    version: 0.0.1
+  ports:
+    - protocol: TCP
+      port: 9200
+      targetPort: 9200
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: elastic9300
+spec:
+  selector:
+    app: thegym
+    component: elastic
+    version: 0.0.1
+  ports:
+    - protocol: TCP
+      port: 9300
+      targetPort: 9300
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kibana
+  labels:
+    app: thegym
+    component: kibana
+    version: 0.0.1      
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: thegym
+      component: kibana
+      version: 0.0.1      
+  template:
+    metadata:
+      labels:
+        app: thegym
+        component: kibana
+        version: 0.0.1
+    spec:
+      containers:
+      - name: kibana
+        image: docker.elastic.co/kibana/kibana:6.5.0
+        ports:
+        - containerPort: 9200
+        - containerPort: 9300
+        env:
+        - name: SERVER_NAME
+          value: "kibana"
+        - name: ELASTICSEARCH_URL
+          value: "http://elastic9200:9200"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: kibana
+  labels:
+    app: thegym
+    component: kibana
+    version: 0.0.1
+spec:
+  ports:
+    - protocol: TCP
+      port: 5601
+      targetPort: 5601
+      nodePort: 30956
+  selector:
+    app: thegym
+    component: kibana
+    version: 0.0.1
+  type: LoadBalancer
+  sessionAffinity: None
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafkaconnect
+  labels:
+    app: thegym
+    component: kafkaconnect
+    version: 0.0.1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: thegym
+      component: kafkaconnect
+      version: 0.0.1   
+  template:
+    metadata:
+      labels:
+        app: thegym
+        component: kafkaconnect
+        version: 0.0.1
+    spec:
+      containers:
+      - name: kafkaconnect
+        image: digitalemil/thegyminthecloud:kafka-connect-with-bigtable-v0.0.1
+        imagePullPolicy: Always
+        env:
+        - name: CONNECT_BOOTSTRAP_SERVERS
+          value: "kafka-instance-svc:9092"
+        - name: CONNECT_ZOOKEEPER_CONNECT
+          value: "zookeeper.default.svc.cluster.local:2181"
+        - name: CONNECT_REST_ADVERTISED_HOST_NAME
+          value: localhost
+        - name: CONNECT_GROUP_ID
+          value: "connect"
+        - name: CONNECT_CONFIG_STORAGE_TOPIC
+          value: "connect-config"
+        - name: CONNECT_OFFSET_STORAGE_TOPIC
+          value: "connect-offsets"
+        - name: CONNECT_STATUS_STORAGE_TOPIC
+          value: "connect-status"
+        - name: CONNECT_REPLICATION_FACTOR
+          value: "1"
+        - name: CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR
+          value: "1"
+        - name: CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR
+          value: "1"
+        - name: CONNECT_STATUS_STORAGE_REPLICATION_FACTOR
+          value: "1"
+        - name: CONNECT_KEY_CONVERTER
+          value: "org.apache.kafka.connect.storage.StringConverter"
+        - name: CONNECT_VALUE_CONVERTER
+          value: "org.apache.kafka.connect.json.JsonConverter"
+        - name: CONNECT_VALUE_CONVERTER_SCHEMAS_ENABLE
+          value: "false"
+        - name: CONNECT_KEY_CONVERTER_SCHEMAS_ENABLE
+          value: "false"
+        - name: CONNECT_INTERNAL_KEY_CONVERTER
+          value: "org.apache.kafka.connect.json.JsonConverter"
+        - name: CONNECT_INTERNAL_VALUE_CONVERTER
+          value: "org.apache.kafka.connect.json.JsonConverter"
+        - name: CONNECT_PRODUCER_INTERCEPTOR_CLASSES
+          value: "io.confluent.monitoring.clients.interceptor.MonitoringProducerInterceptor"
+        - name: CONNECT_CONSUMER_INTERCEPTOR_CLASSES
+          value: "io.confluent.monitoring.clients.interceptor.MonitoringConsumerInterceptor"
+        - name: CONNECT_LOG4J_ROOT_LOGLEVEL
+          value: "INFO"
+        - name: CONNECT_LOG4J_LOGGERS
+          value: "org.reflections=ERROR"
+        - name: CONNECT_PLUGIN_PATH
+          value: "/usr/share/java"
+        - name: CLASSPATH
+          value: "/usr/share/java/monitoring-interceptors/monitoring-interceptors-5.0.1.jar"
+        ports:
+        - containerPort: 8083
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: kafkaconnect
+spec:
+  selector:
+    app: thegym
+    component: kafkaconnect
+    version: 0.0.1
+  ports:
+    - protocol: TCP
+      port: 8083
+      targetPort: 8083
