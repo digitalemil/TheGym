@@ -9,3 +9,6 @@ Requirements:
 Installation:
 * On minikube: minikuke-setup.sh
 * Others: See steps in minikube 
+
+Architecure:
+![alt text](https://raw.githubusercontent.com/digitalemil/thegym/master/Microservice-UI/public/images/architecture.png)
