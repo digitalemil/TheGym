@@ -17,9 +17,21 @@ ENV DOCKERHUB_REPO=$DOCKERHUB_REPO
 ENTRYPOINT node /opt/app/bin/www
 EOF
 
-cd KafkaConnectWithBigTable
-docker build -t $DOCKERHUB_USER/$DOCKERHUB_REPO:kafka-connect-with-bigtable-v$VERSION .
-docker push $DOCKERHUB_USER/$DOCKERHUB_REPO:kafka-connect-with-bigtable-v$VERSION
+#cd KafkaConnectWithBigTable
+#docker build -t $DOCKERHUB_USER/$DOCKERHUB_REPO:kafka-connect-with-bigtable-v$VERSION .
+#docker push $DOCKERHUB_USER/$DOCKERHUB_REPO:kafka-connect-with-bigtable-v$VERSION
+#cd ..
+
+cp Dockerfile Microservice-UI		
+cd Microservice-UI
+docker build -t $DOCKERHUB_USER/$DOCKERHUB_REPO:microservice-ui-v$VERSION .
+docker push $DOCKERHUB_USER/$DOCKERHUB_REPO:microservice-ui-v$VERSION 
+cd ..
+
+cp Dockerfile Microservice-GAEImporter	
+cd Microservice-GAEImporter
+docker build -t $DOCKERHUB_USER/$DOCKERHUB_REPO:microservice-gaeimporter-v$VERSION .
+docker push $DOCKERHUB_USER/$DOCKERHUB_REPO:microservice-gaeimporter-v$VERSION 
 cd ..
 
 cp Dockerfile Microservice-ElasticSetup
@@ -55,12 +67,6 @@ cd Microservice-MessageListener
 mvn package -DskipTests
 docker build -t $DOCKERHUB_USER/$DOCKERHUB_REPO:microservice-messagelistener-v$VERSION .
 docker push $DOCKERHUB_USER/$DOCKERHUB_REPO:microservice-messagelistener-v$VERSION 
-cd ..
-
-cp Dockerfile Microservice-UI		
-cd Microservice-UI
-docker build -t $DOCKERHUB_USER/$DOCKERHUB_REPO:microservice-ui-v$VERSION .
-docker push $DOCKERHUB_USER/$DOCKERHUB_REPO:microservice-ui-v$VERSION 
 cd ..
 
 cd Microservice-UIUpdater

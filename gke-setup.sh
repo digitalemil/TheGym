@@ -1,3 +1,4 @@
+export PATH=/home/esiemes/TheGym:$PATH
 
 #minikube start --cpus=4 --memory="24000" --vm-driver='virtualbox'
 
