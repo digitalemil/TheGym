@@ -42,4 +42,5 @@ sleep 30
 curl -X POST --data-binary "@kibanahostandport" http://$UIHOSTANDPORT/sethostnameandport
 
 #minikube dashboard &
+kubectl apply -f gaeimporter.yaml
 
