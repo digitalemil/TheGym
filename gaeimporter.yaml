@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: gaeimporter
-        image: digitalemil/thegyminthecloud:microservice-gaeimporter-v0.0.1
+        image: eu.gcr.io/esiemes-default/gaeimporter
         imagePullPolicy: Always
         env:
         - name: PORT

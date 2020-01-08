@@ -105,7 +105,7 @@ spec:
     - protocol: TCP
       port: 5601
       targetPort: 5601
-      nodePort: 30956
+      nodePort: 30959
   selector:
     app: thegym
     component: kibana
