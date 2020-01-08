@@ -463,7 +463,7 @@ function sessionData() {
   }
   ret= ret+ "]}";
 
-  let r= JSON.parse(ret);
+  //let r= JSON.parse(ret);
   //console.log("users.length: "+ r.users.length);
   //res.write(ret);
   //res.end();

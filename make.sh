@@ -22,6 +22,13 @@ EOF
 #docker push $DOCKERHUB_USER/$DOCKERHUB_REPO:kafka-connect-with-bigtable-v$VERSION
 #cd ..
 
+cd Microservice-PMMLEvaluator
+mvn clean package -DskipTests
+docker build -t $DOCKERHUB_USER/$DOCKERHUB_REPO:microservice-pmmlevaluator-v$VERSION .
+docker push $DOCKERHUB_USER/$DOCKERHUB_REPO:microservice-pmmlevaluator-v$VERSION 
+cd ..
+
+
 cp Dockerfile Microservice-UI		
 cd Microservice-UI
 docker build -t $DOCKERHUB_USER/$DOCKERHUB_REPO:microservice-ui-v$VERSION .
@@ -87,9 +94,4 @@ docker build -t $DOCKERHUB_USER/$DOCKERHUB_REPO:microservice-loadgenerator-v$VER
 docker push $DOCKERHUB_USER/$DOCKERHUB_REPO:microservice-loadgenerator-v$VERSION 
 cd ..
 
-cd Microservice-PMMLEvaluator
-mvn package -DskipTests
-docker build -t $DOCKERHUB_USER/$DOCKERHUB_REPO:microservice-pmmlevaluator-v$VERSION .
-docker push $DOCKERHUB_USER/$DOCKERHUB_REPO:microservice-pmmlevaluator-v$VERSION 
-cd ..
 
