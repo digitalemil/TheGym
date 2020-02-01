@@ -49,7 +49,7 @@ let daystring= ""+day;
   			if(minute< 10)
     				minutestring="0"+minutestring;
             		    
-			let second= d.getUTCMilliseconds()/1000.0;
+			let second= d.getUTCSeconds()+d.getUTCMilliseconds()/1000.0;
 			let secondstring= ""+second;
   			if(second< 10)
     				secondstring="0"+secondstring

@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ui
+spec:
+  selector:
+    app: thegym
+    component: ui
+    version: 0.0.1
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
