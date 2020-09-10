@@ -13,7 +13,7 @@
     "ejs": "~2.5.2",
     "express": "^4.17.1",
     "fibers": "^4.0.2",
-    "http-proxy": "^1.16.2",
+    "http-proxy": "^1.18.1",
     "morgan": "^1.9.1",
     "request": "^2.88.0",
     "serve-favicon": "^2.5.0",
